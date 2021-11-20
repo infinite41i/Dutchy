@@ -1,2 +1,4 @@
 # Dutchy
-Go Dutch web application / اپ مادرخرج / حسابداری خوابگاه، سفر، و غیره
+اپ مادرخرج | حسابداری خوابگاه، سفر، و غیره
+
+Go Dutch web application
