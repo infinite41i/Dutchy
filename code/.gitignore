@@ -1,0 +1,55 @@
+.idea/
+.vscode
+
+# Django Recommended
+*.egg-info
+*.pot
+*.py[co]
+__pycache__
+MANIFEST
+docs/_build/
+docs/locale/
+tests/coverage_html/
+tests/.coverage
+build/
+public/
+data/
+tests/report/
+db.sqlite3
+
+jwt-public-key
+
+celerybeat-schedule
+celerybeat.pid
+
+id_rsa
+venv
+.venv
+staticfiles
+_staticfiles
+tag/play_with_mongo.py
+settings.ini
+.env
+*.rdb
+*.mo
+jwt.pub
+jwt.priv
+
+# Script Related
+node_modules/
+_public
+.coverage
+yarn-error.log
+
+# scrapyd logs
+reportage/logs/
+reportage/dbs/
+*.pid
+
+# celery dbs
+celerybeat-schedule.db
+dbs/
+
+!static/jet/js/build
+
+deployment/prod-secret.yaml

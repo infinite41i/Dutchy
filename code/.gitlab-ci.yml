@@ -1,0 +1,20 @@
+stages:
+  - build
+
+variables:
+  REGISTRY: "registry.gitlab.com"
+  LATEST_TAG: "$REGISTRY/farzad-845/dong_yab:latest"
+  TAG: "$REGISTRY/farzad-845/dong_yab:$CI_COMMIT_SHORT_SHA"
+
+build:production:
+  stage: build
+  image:
+    name: gcr.io/kaniko-project/executor:debug
+    entrypoint: [ "" ]
+  script:
+    - echo "{\"auths\":{\"$CI_REGISTRY\":{\"username\":\"$CI_REGISTRY_USER\",\"password\":\"$CI_REGISTRY_PASSWORD\"}}}" > /kaniko/.docker/config.json
+    - /kaniko/executor --context $CI_PROJECT_DIR --dockerfile $CI_PROJECT_DIR/Dockerfile --destination $TAG --destination $LATEST_TAG --cache=true
+  rules:
+    - if: '$CI_COMMIT_BRANCH == "master"'
+      when: always
+    - when: manual
