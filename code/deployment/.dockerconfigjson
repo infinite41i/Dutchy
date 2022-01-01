@@ -1,0 +1,10 @@
+{
+    "auths": {
+        "https://registry.gitlab.com":{
+            "username":"xxxxxxxxxxx",
+            "password":"xxxxxxxxxxx",
+            "email":"farzadshami845@gmail.com",
+            "auth":"xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
+    	}
+    }
+}

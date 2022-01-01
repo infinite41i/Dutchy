@@ -1,0 +1,64 @@
+.myState{
+    margin-bottom:30px;
+  
+    border-bottom:1px solid rgb(167, 161, 161);
+}
+.myState .state-header
+{
+    padding-top:1px;
+    height:40px;
+    background-color: #eeeeee;
+    color:#3a4750;
+}
+.myState .state-header i{
+    color:#d72323;
+}
+.myState .state-header h4{
+   
+    text-align:center;
+    font-family: BYekan ;
+   
+}
+.myState ul{
+    border:1px solid #eeeeee;
+    background-color: #fff;
+    padding-right: 0px;
+    
+}
+.myState ul li
+{
+    padding:5px;
+    border-bottom: 0.5px solid #eeeeee;
+    
+}
+.myState ul li:hover{
+    transition-duration:300ms;
+    background-color:#eeeeee;
+}
+.myState label{
+    text-align: center;
+    align-items: center;
+}
+.main-content{
+    background-color: #fff !important;
+}
+
+.myState table{
+    background-color: #fff;
+    border-color: #eeeeee;
+}
+.myState table.table-bordered > thead > tr > th{
+    border:1px solid #eeeeee;
+}
+.myState table.table-bordered > tbody > tr > td{
+    border:1px solid #eeeeee;
+}
+.div-scroll
+{
+    height: 200px;
+    overflow-y: scroll;
+}
+.myState h5 i{
+    color:#d72323;
+}
+

@@ -1,0 +1,50 @@
+@font-face {
+    font-family: BYekan;
+          src: url("../font/BYekan(hamyarprojeh.ir)/1.eot"),
+            url( "../font/BYekan(hamyarprojeh.ir)/2.ttf"),
+            url( "../font/BYekan(hamyarprojeh.ir)/3.woff");
+  
+            font-weight: normal;
+            font-style: normal;
+}
+.modal-create .btn-sub{
+    color: #eeeeee;
+    background:#d72323;
+  
+transition: all 0.5s;
+  cursor: pointer;
+  margin: 5px;
+ border-radius:20px;
+}
+.modal-create .btn-sub:hover{
+    transition-duration: 300ms;
+ 
+
+  background: rgb(58,71,80);
+}
+.modal-create {
+    font-family:BYekan;
+    font-weight:200;
+}
+.modal-create .modal-header
+{
+    background: #3a4750;
+    color: #fff;
+}
+.modal-create .close
+{
+    color: #fff;
+}
+.modal-create .modal-header h4.modal-title {
+    font-weight: 300;
+    font-family: BYekan;
+
+}
+
+.modal-body label {
+    font-weight: 400;
+ 
+}
+.modal-create input{
+    font-family:BYekan;
+}

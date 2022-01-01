@@ -1,0 +1,55 @@
+apiVersion: apps/v1
+kind: Deployment
+
+metadata:
+  name: postgresql-backup
+  labels:
+    app: postgresql-backup
+
+spec:
+  selector:
+    matchLabels:
+      app: postgresql-backup
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      labels:
+        app: postgresql-backup
+    spec:
+      containers:
+      - name: postgresql-backup
+        image: itbm/postgresql-backup-s3:latest
+        imagePullPolicy: Always
+        resources:
+          limits:
+            cpu: "250m"
+            ephemeral-storage: 1G
+            memory: "256Mi"
+          requests:
+            cpu: "250m"
+            ephemeral-storage: 1G
+            memory: "128Mi"
+        env:
+        - name: POSTGRES_DATABASE
+          value: "crypto_clothes"
+        - name: POSTGRES_HOST
+          value: "postgresql-svc"
+        - name: POSTGRES_PORT
+          value: "5432"
+        - name: POSTGRES_PASSWORD
+          value: "sbadmin912"
+        - name: POSTGRES_USER
+          value: "postgres"
+        - name: S3_ACCESS_KEY_ID
+          value: "67e17362-0aa3-4eee-9c81-62bb6fb0b45c"
+        - name: S3_SECRET_ACCESS_KEY
+          value: "061e0526a89dbeb2ba8b8ca9b2ac8201fd549310cd44be11b89f4d2f58b0a718"
+        - name: S3_BUCKET
+          value: "db-backup-donot-delete-or-upload-any-thing"
+        - name: S3_ENDPOINT
+          value: "https://s3.ir-thr-at1.arvanstorage.com"
+        - name: S3_REGION
+          value: ""
+        - name: SCHEDULE
+          value: "@every 1h"

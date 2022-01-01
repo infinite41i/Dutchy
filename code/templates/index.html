@@ -1,0 +1,535 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="">
+
+
+    <link rel="shortcut icon" href="/static/img/favicon.html">
+
+    <title>Blank</title>
+
+
+    <link href="/static/css/bootstrap.min.css" rel="stylesheet">
+
+    <link href="/static/font-awesome/css/font-awesome.css" rel="stylesheet"/>
+    <link href="/static/css/style.css" rel="stylesheet">
+
+
+    <link href="/static/fileuploads/css/dropify.css" rel="stylesheet"/>
+    <link href="/static/css/GroupContent.css" rel="stylesheet"/>
+    <link href="/static/css/modal.css" rel="stylesheet"/>
+    <link href="/static/css/MyState.css" rel="stylesheet"/>
+
+</head>
+
+<body class="container1 container" style="max-width: 80%">
+
+<section id="container">
+    <div class="sidebar-toggle-box">
+        <div data-original-title="Toggle Navigation" data-placement="right" class="icon-reorder tooltips"></div>
+    </div>
+
+    <aside>
+        <div id="sidebar" class="nav-collapse ">
+
+            <ul class="sidebar-menu">
+
+                <li class="sub-menu account-menu">
+
+                    <div class="account-img">
+                        <img class="" src="/static/img/avatar-7.jpg">
+                        <br/>
+                        <h6 style="display:block"><span class="account-email">{{ user.username }}</span></h6>
+                        <br/>
+                        <button onclick=" CreateNewGroups() " class="btn btn-block btn-info btn-new-group btn-sm">
+                            ایجاد گروه جدید
+                        </button>
+                        <button onclick="JoinGroup()" class="btn btn-block btn-info btn-new-group btn-sm"> ملحق شدن
+                            به گروه
+                        </button>
+                    </div>
+
+                </li>
+
+                <div class="header-group">
+
+                    <h5 style="font-family:BYekan"><i class="icon-group"></i> گروه های من</h5>
+                </div>
+                {% for group in groups %}
+                    <li class="sub-menu group-menu">
+                        <a href={% url 'home' group.uuid %}>
+                            <div class="row" style="position: relative; ">
+                                <div class="col-4 col-sm-4">
+                                    <div class="group-img">
+                                        {% if group.image %}
+                                            <img src={% url "serve_file" group.image.name %}>
+                                        {% else %}
+                                            <img src="/static/img/avatar-7.jpg">
+                                        {% endif %}
+                                    </div>
+                                </div>
+                                <div class="col-8 col-sm-8">
+                                    <h5> {{ group.name }} </h5>
+                                </div>
+                                <span class="member">
+                                        <i class="icon-user"></i>
+                                        {{ group.count_user }} نفر
+                                    </span>
+                            </div>
+                        </a>
+                    </li>
+                {% endfor %}
+
+            </ul>
+
+        </div>
+    </aside>
+
+    <section id="main-content" style="width: 100%">
+        <section class="wrapper">
+            <div class="row group-header">
+
+
+                <div class="col-md-4">
+
+                    <div class="col-5 img-header ">
+                        {% if group.image %}
+                            <img src={% url "serve_file" group.image.name %}>
+                        {% else %}
+                            <img src="/static/img/avatar-7.jpg">
+                        {% endif %}
+                        <small>  {{ group.count_user }} </small>
+                    </div>
+
+
+                </div>
+                <div class="col-md-4">
+                    <h4>{{ group.name }}</h4>
+                    <h5>کد عضویت:</h5>
+                    <h5>{{ group.uuid }}</h5>
+                </div>
+                <div class="col-md-4 div-charge">
+                    <div class="wallet ">
+                        <label class="">
+                            <h4>موجودی: <i class="icon icon-usd">{{ request.user.profile.wallet }}</i></h4>
+                            <button onclick="ChrgeWallet()" class="btn btn-success btn-charge">شارژ کیف پول</button>
+                        </label>
+                    </div>
+
+
+                </div>
+            </div>
+            </div>
+
+            <div class="group-content  row">
+                <section class="add-buy">
+                    <div class="">
+                        <button id="btn-show" class="btn btn-success btn-show-box">
+                            اضافه کردن خرید جدید
+                        </button>
+                    </div>
+
+                    <div id="buy-box" class="" hidden>
+                        <div class="row buy-box">
+                            <div class="col-sm-5  buy-form">
+                                <div class="form" id="add-toloist-form">
+                                    <div class="form-group">
+                                        <label for="exampleInputEmail1"> اقلام خریداری شده </label>
+                                        <textarea class="form-control" name="kala" id="kala" placeholder=" "></textarea>
+
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="تت"> قیمت </label>
+                                        <input type="number" name="cost" class="form-control" id="cost" placeholder=" ">
+
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label for="">شریک با:</label>
+                                        <div class="checkboxes">
+                                            {% for user in users %}
+                                                <label class="label_check" for="checkbox-01">
+                                                    <input name="userId" id="checkbox-01" value="{{ user.id }}"
+                                                           type="checkbox"/>
+                                                    {{ user.first_name }}
+
+                                                </label>
+                                            {% endfor %}
+                                        </div>
+                                    </div>
+                                    <button class="btn  btn-info  btn-add-to-list" id="btn-add-to-list"> اضافه کردن به
+                                        فاکتور
+                                    </button>
+                                    <button class="btn  btn-warning  btn-edit-list" id="btn-edit-list"> ویرایش</button>
+                                    <button class="btn  btn-secondary  btn-cancell" id="btn-cancell"> لغو</button>
+                                </div>
+                            </div>
+                            <div class="col-sm-7">
+
+                                <div class="">
+                                    <header class="panel-heading">
+                                        <b> لیست اقلام </b>
+                                    </header>
+                                    <div class="scroll-table">
+                                        <table class="table table-striped">
+                                            <thead>
+                                            <tr>
+                                                <th>اقلام</th>
+                                                <th> قیمت</th>
+                                                <th>اعضا</th>
+                                                <th></th>
+                                            </tr>
+                                            </thead>
+                                            <tbody id="table-row">
+                                            <tr>
+                                                <td> کیک و میوه</td>
+                                                <td class="cost">23000</td>
+                                                <td>
+                                                    <img class="user-group-img" src="/static/img/سایت.jpg">
+                                                    <img class="user-group-img" src="/static/img/سایت.jpg">
+                                                    <img class="user-group-img" src="/static/img/سایت.jpg">
+                                                </td>
+                                                <td>
+                                                    <i class="icon-pencil text-warning"></i>
+                                                    <i class="icon-trash text-danger"></i>
+                                                </td>
+                                            </tr>
+
+                                            <tr>
+                                                <td> کیک و میوه</td>
+                                                <td class="cost">23000</td>
+                                                <td>
+                                                    <img class="user-group-img" src="/static/img/سایت.jpg">
+                                                    <img class="user-group-img" src="/static/img/سایت.jpg">
+                                                    <img class="user-group-img" src="/static/img/سایت.jpg">
+                                                </td>
+                                                <td>
+                                                    <i class="icon-pencil text-warning"></i>
+                                                    <i class="icon-trash text-danger"></i>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td> کیک و میوه</td>
+                                                <td class="cost">23000</td>
+                                                <td>
+                                                    <img class="user-group-img" src="/static/img/سایت.jpg">
+                                                    <img class="user-group-img" src="/static/img/سایت.jpg">
+                                                    <img class="user-group-img" src="/static/img/سایت.jpg">
+                                                </td>
+                                                <td>
+                                                    <i class="icon-pencil text-warning"></i>
+                                                    <i class="icon-trash text-danger"></i>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td> کیک و میوه</td>
+                                                <td class="cost">63000</td>
+                                                <td>
+                                                    <img class="user-group-img" src="/static/img/سایت.jpg">
+                                                    <img class="user-group-img" src="/static/img/سایت.jpg">
+                                                    <img class="user-group-img" src="/static/img/سایت.jpg">
+                                                </td>
+                                                <td>
+                                                    <i class="icon-pencil text-warning"></i>
+                                                    <i class="icon-trash text-danger"></i>
+                                                </td>
+                                            </tr>
+
+
+                                            </tbody>
+                                        </table>
+
+                                    </div>
+
+                                    <div class="row ">
+                                        <div class="col-sm-6 ">
+                                            <div class="alert alert-info mt-2">
+                                                جمع کل: <span>123400</span> تومان
+                                            </div>
+
+                                        </div>
+
+                                        <div class="col-sm-6 ">
+                                            <button id="finish" class="mt-2 btn btn-success btn-block">
+                                                ثبت نهایی فاکتور
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="">
+                            <button class="btn btn-light btn-block btn-hide">
+                                لغو ثبت خرید
+                            </button>
+                        </div>
+                    </div>
+                </section>
+
+                <section class="myState  container" style="max-width: 95%">
+                    <div class="state-header">
+                        <h4><i class="icon-user"></i> وضعیت من در گروه</h4>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6 ">
+                            <h5><i class="icon-comments"></i> وضعیت طلب و بدهی من </h5>
+                            <ul class="ul-scroll">
+                                <li><img class="user-group-img" src={{ main_user.profile.image }}>{{ user.name }}<span
+                                        class="alert text-success">{{ main_user.talab }}تومان
+                                    {% if user.talab > 0 %}
+                                        طلب
+                                    {% else %}
+                                        بدهی
+
+                                    {% endif %}  دارم</span></li>
+                            </ul>
+                        </div>
+                        <div class="col-md-6  ">
+                            <h5 for=""><i class="icon-time"></i> فعالیت های اخیر من </h5>
+
+                            <table class="table  table-bordered table-hover table-scroll">
+                                <thead>
+                                <tr>
+                                    <th>#</th>
+
+                                    <th>فعالیت</th>
+                                    <th>مبلغ</th>
+                                    <th> تاریخ وساعت</th>
+
+                                </tr>
+                                </thead>
+                                <tbody>
+
+                                {% for user_factor in user_factors %}
+                                    <tr>
+                                        <td>{{ forloop.counter }}</td>
+
+                                        <td>{{ user_factor.name }}</td>
+                                        <td> {{ user_factor.price }}</td>
+                                        <td>{{ user_factor.time }}</td>
+
+                                    </tr>
+                                {% endfor %}
+
+                                </tbody>
+                            </table>
+
+                            </table>
+                        </div>
+                    </div>
+                </section>
+
+
+                <section class="myState  container" style="max-width: 95%">
+                    <div class="state-header">
+                        <h4><i class="icon-group"></i> اطلاعات عمومی گروه </h4>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12  ">
+
+
+                            <table class="table  table-bordered table-hover ">
+                                <thead>
+                                <tr>
+                                    <th>#</th>
+                                    <th>عضو</th>
+                                    <th>بدهی /طلب</th>
+                                    <th>آخرین فعالیت</th>
+
+                                </tr>
+                                </thead>
+                                <tbody>
+
+                                {% for user in users %}
+                                    <tr>
+                                        <td>{{ forloop.counter }}</td>
+                                        <td>{{ user.first_name }}</td>
+                                        <td class="text-danger">{{ user.talab }}</td>
+                                        <td>{{ user.factor_owner.first.time }}</td>
+
+                                    </tr>
+                                {% endfor %}
+
+
+                                </tbody>
+                            </table>
+
+                            </table>
+                        </div>
+                    </div>
+                </section>
+            </div>
+
+            <div>
+
+            </div>
+        </section>
+    </section>
+
+</section>
+
+<form id="factor-form" method="post" action="/add_factor/">
+    {% csrf_token %}
+    <input id="factor" type="hidden" name="factor">
+    <input name="uuid" value="{{ group.uuid }}">
+</form>
+<div id="createModal" class="modal modal-create" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title"> فرم افزودن گروه</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form class="form" enctype="multipart/form-data" method="post" action="/add_group/">
+                    {% csrf_token %}
+                    <div class="row">
+                        <div class="col-md-6">
+
+                            <div class="form-group ">
+                                <label>نام گروه</label>
+                                <input type="text" class="form-control" id="exampleInputEmail1"
+                                       aria-describedby="emailHelp" name="name_group"
+                                       placeholder="  یک نام برای گروه خود وارد کنید  ">
+                            </div>
+                            <div class="form-group">
+                                <label for="">توضیحات گروه</label>
+                                <textarea class="form-control" rows=4 name="description"
+                                          placeholder="توضیحات گروه را وارد کنید "></textarea>
+                            </div>
+
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group ">
+                                <label>پروفایل گروه</label>
+                                <input type="file" class="dropify" data-height="200" name="file"/>
+                            </div>
+                        </div>
+                    </div>
+                    <button type="submit" class=" btn btn-sub  btn-block  m-t-2">ثبت</button>
+                </form>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+
+<div id="joinModal" class="modal modal-create" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title"> ملحق شدن به گروه </h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form class="form" action="/join_group/" method="post">
+                    {% csrf_token %}
+                    <div class="form-group ">
+                        <label>کد ورود به گروه </label>
+                        <input type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp"
+                               placeholder=" کد رورد به گروه را وارد کنید " name="uuid">
+                    </div>
+
+                    <button type="submit" class=" btn btn-sub  btn-block  m-t-2">محلق شدن به گروه</button>
+                </form>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<div id="ChargeModal" class="modal modal-create" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title"> شارژ کیف پول </h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form class="form" action="/add_balance/">
+                    <div class="form-group ">
+                        <label> مبلغ شارژ </label>
+                        <input type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp"
+                               placeholder=" مبلغ مورد نظر را وارد کنید (تومان) " name="price">
+                    </div>
+
+                    <button type="submit" class=" btn btn-sub  btn-block  m-t-2"> شارژ کیف پول</button>
+                </form>
+            </div>
+
+        </div>
+    </div>
+</div>
+<div id="EditUserModal" class="modal modal-create" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+        <div class="modal-body">
+            <form class="form">
+                <div class="row">
+                    <div class="col-md-6">
+
+                        <div class="form-group ">
+                            <label>نام </label>
+                            <input type="text" class="form-control" id="exampleInputEmail1"
+                                   aria-describedby="emailHelp" value="امیر محمدی">
+                        </div>
+                        <div class="form-group ">
+                            <label>ایمیل </label>
+                            <input type="email" class="form-control" id="exampleInputEmail1"
+                                   aria-describedby="emailHelp" value="amyrm1960@gmail.com">
+                        </div>
+
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group ">
+                            <label>پروفایل شخصی</label>
+                            <input type="file" class="dropify" data-height="200"/>
+                        </div>
+                    </div>
+                </div>
+                <button type="submit" class=" btn btn-sub  btn-block  m-t-2">ذخیره تغییرات</button>
+            </form>
+        </div>
+
+    </div>
+</div>
+</div>
+<script src="/static/js/jquery.js"></script>
+<script src="/static/js/bootstrap.min.js"></script>
+<script src="/static/js/jquery.scrollTo.min.js"></script>
+<script src="/static/js/jquery.nicescroll.js" type="text/javascript"></script>
+
+
+<script src="/static/js/common-scripts.js"></script>
+<script src="/static/js/script.js"></script>
+<script src="/static/fileuploads/js/dropify.js"></script>
+<script type="text/javascript">
+    $('.dropify').dropify({
+        messages: {
+            'default': 'فایل را به اینجا بکشید یا کلیک کنید',
+            'replace': 'برای جایگزینی فایل را به اینجا بکشید یا کلیک کنید',
+            'remove': 'پاک کردن',
+            'error': 'با پوزش فراوان، خطایی رخ داده'
+        },
+        error: {
+            'fileSize': 'حجم فایل بیشتر از حد مجاز است (1M).'
+        }
+    });
+
+    function check() {
+        console.log(groups)
+    }
+</script>
+</body>
+
+</html>

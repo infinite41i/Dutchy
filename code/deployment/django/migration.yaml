@@ -1,0 +1,29 @@
+apiVersion: batch/v1
+kind: Job
+
+metadata:
+  name: django-migrations
+
+spec:
+  template:
+    spec:
+      containers:
+        - name: django
+          command: ['python', 'manage.py', 'migrate']
+          image: farzad845/software-lab:latest
+          envFrom:
+            - secretRef:
+                name: prod-secret
+          resources:
+            limits:
+              cpu: '1'
+              ephemeral-storage: 2G
+              memory: 1G
+            requests:
+              cpu: '1'
+              ephemeral-storage: 2G
+              memory: 1G
+      imagePullSecrets:
+        - name: gitlab-registry-credentials
+      restartPolicy: Never
+  backoffLimit: 10

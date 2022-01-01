@@ -1,0 +1,53 @@
+apiVersion: apps/v1beta1
+kind: Deployment
+
+metadata:
+  annotations:
+  labels:
+    app: django
+  name: django
+
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      name: django
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      annotations:
+      labels:
+        app: django
+        name: django
+    spec:
+      containers:
+        - image: farzad845/software-lab:latest
+          imagePullPolicy: Always
+          name: django
+          command:
+            - python
+            - manage.py
+            - runserver
+            - '0.0.0.0:8000'
+          ports:
+            - containerPort: 8000
+              protocol: TCP
+          envFrom:
+            - secretRef:
+                name: prod-secret
+          resources:
+            limits:
+              cpu: "500m"
+              ephemeral-storage: 1G
+              memory: "512Mi"
+            requests:
+              cpu: "500m"
+              ephemeral-storage: 1G
+              memory: "512Mi"
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+      imagePullSecrets:
+        - name: gitlab-registry-credentials
+      dnsPolicy: ClusterFirst
+      restartPolicy: Always

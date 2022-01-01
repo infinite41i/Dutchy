@@ -1,0 +1,45 @@
+.nav-tabs li{
+ text-align: center;
+    width:33%;
+    color:#3a4750;
+    border: none;
+}
+.nav-tabs li a
+{
+    color:#3a4750;
+ }
+ .nav-tabs > li.active > a, .nav-tabs > li.active > a:hover, .nav-tabs > li.active > a:focus
+ {
+     border: none;
+     transition-duration: 500ms;
+     border-bottom: 0.5px solid #d72323;
+     color: #d72323;
+     font-weight: 200;
+ }
+ .tab-content{
+     height:246px;
+  
+     background-color:#fff;
+     overflow-y: scroll;
+    
+ }
+ .tab-content form {
+    margin:20px 30px 10px 30px;
+ }
+ .tab-content form .label_check{
+     display:block;
+ } 
+.tab-content .btn-sub{
+    color: #eeeeee;
+    background:#d72323;
+   
+transition: all 0.5s;
+  cursor: pointer;
+  margin: 5px;
+ border-radius:20px;
+}
+.tab-content .btn-sub:hover
+{
+    transition-duration: 300ms;
+  background: rgb(58,71,80);
+}

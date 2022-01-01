@@ -1,0 +1,110 @@
+@font-face {
+    font-family: 'Yekan';
+    src: url('https://cdn.fontcdn.ir/Font/Persian/Yekan/Yekan.eot');
+    src: url('https://cdn.fontcdn.ir/Font/Persian/Yekan/Yekan.eot?#iefix') format('embedded-opentype'),
+		 url('https://cdn.fontcdn.ir/Font/Persian/Yekan/Yekan.woff') format('woff'),
+		 url('https://cdn.fontcdn.ir/Font/Persian/Yekan/Yekan.ttf') format('truetype');
+    font-weight: 100;
+}
+
+body{
+background-color:#eeee !important;
+font-family: 'Yekan' !important;
+
+}
+
+.form-div{
+    background-color:#eeee;
+    padding:10px;
+    margin-left: auto;
+    margin-right:auto;
+    width: 400px;
+    left: 0;
+    top: 0;
+    margin-top:10%;
+    -webkit-box-shadow: -1px 7px 26px 21px rgba(58,71,80,0.64);
+    -moz-box-shadow: -1px 7px 26px 21px rgba(58,71,80,0.64);
+    box-shadow: -1px 7px 26px 21px rgba(58,71,80,0.64);
+}
+.form-header{
+    width: 100%;
+   
+}
+.form-header h3{
+    text-align:center;
+}
+.form-div .form {
+    background-color: #eeee;
+    text-align:right;
+    align-items: right;
+    padding-top: 15px;
+  
+}
+.form-div input{
+    text-align:right;
+}
+.form-div .btn-sub{
+    color: #eeeeee;
+    background:#d72323;
+   
+transition: all 0.5s;
+  cursor: pointer;
+  margin: 5px;
+ border-radius:20px;
+}
+.form-div .btn-sub:hover{
+    
+transition-duration: 300ms;
+ 
+
+  background: rgb(58,71,80);
+}
+.form-div .btn-email{
+    background-color: #d72323;
+    border-radius:20px;
+    color: #eeee !important;
+}
+.form-div .btn-email:hover{
+    background-color: rgb(58,71,80);
+}
+.tab-heading{
+    color: #cc208e;
+    text-align: center;
+ }
+ .nav-tabs .nav-item .nav-link,
+ .nav-tabs .nav-link:focus,
+ .nav-tabs .nav-link:hover{
+     padding: 0.6rem 0.6rem;
+     font-size: 20px;
+     color: #eeee;
+     background: #3a4750;
+ }
+ .nav-tabs .nav-link.active{
+     color: #ae37bb;
+     background: #eeee;
+     border-top-width: 4px;
+     border-color: #d72323 #faf6fb #ffffff;
+ }
+ .nav-tabs .show{
+     background-color: #cc208e;
+ }
+ .nav-tabs{
+     border-bottom: 0px;
+     padding-right: 0px;
+ }
+ .tab-content{
+     background-clip: white;
+     padding: 5px;
+     padding-right: 15px;
+     border-bottom-right-radius: 3px;
+     border-bottom-left-radius: 3px;
+     box-shadow: 0px 5px 7px 0px rgba(0,0,0,0.08);
+ }
+ .tab-content p{
+     line-height: 2;
+     margin: 15px 0px;
+ }
+ .tab-content h2{
+     margin-bottom: 20px;
+ }
+ 
